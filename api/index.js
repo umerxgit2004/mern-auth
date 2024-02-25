@@ -19,3 +19,12 @@ app.listen(3001,()=>{console.log("server running on Port 3001")})
 
 app.use("/api/user",userRoutes)
 app.use("/api/auth",authRoutes)
+app.use((err,req,res,next)=>{
+    const statusCode = err.status || 500
+    const message = err.message || "Something went wrong"
+    return res.status(statusCode).json({
+        success:false,
+        message,
+        statusCode
+    })
+})
